@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace automobile
 {
@@ -20,14 +21,34 @@ namespace automobile
         {
             InitializeComponent();
             textBox1.Text = "SPENTO";
-            textBox2.Text = "0 km/h";
-            textBox3.Text = "1°";
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            b = macchina.acc(b);
-            textBox2.Text = Convert.ToString(b)+" km/h";
+            b = macchina.acc(b,a);
+            if (b == -1) textBox2.Text = "";
+            else textBox2.Text = Convert.ToString(b)+" km/h";
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            b=macchina.dec(b, a);
+            if (b == -1) textBox2.Text = "";
+            else textBox2.Text = Convert.ToString(b) + " km/h";
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            c=macchina.innesto(c,a);
+            if (c == -1) textBox3.Text = "";
+            else textBox3.Text = Convert.ToString(c) + "°";
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            c=macchina.scalare(c,a);
+            if (c == -1) textBox3.Text = "";
+           else textBox3.Text = Convert.ToString(c) + "°";
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -36,8 +57,15 @@ namespace automobile
             if (a == true)
             {
                 textBox1.Text = "ACCESO";
+                textBox2.Text = "0 km/h";
+                textBox3.Text = "1°";
             }
-            else { textBox1.Text = "SPENTO"; }
+            else 
+            { 
+                textBox1.Text = "SPENTO";
+                textBox2.Text = "";
+                textBox3.Text = "";
+            }
         }
 
 
@@ -63,10 +91,49 @@ namespace automobile
             return a;
         }
 
-        public int acc(int b)
+        public int acc(int b,bool a)
         {
-            b += 1;
-            return b;
+            if (a == true)
+            {
+                b += 1;
+                if (b > 270) b = 270;
+                return b;
+            }
+            else return -1;
+            
+        }
+
+        public int dec(int b,bool a)
+        {
+            if (a == true)
+            {
+                b -= 1;
+                if (b < 0) b = 0;
+                return b;
+            }
+            else return -1;
+        }
+
+        public int innesto(int c, bool a)
+        {
+            if (a == true)
+            {
+                c += 1;
+                if (c > 6) c = 6;
+                return c;
+            }
+            else return -1;
+        }
+
+        public int scalare(int c,bool a)
+        {
+            if (a == true)
+            {
+                c -= 1;
+                if (c < 0) c = 0;
+                return c;
+            }
+            else return -1;
         }
     }
 }
